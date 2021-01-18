@@ -1,0 +1,37 @@
+﻿@model IEnumerable<BICT_POC.Models.Student>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-6">
+        <h2 class="text-primary">Students List</h2>
+    </div>
+    <div class="col-6 text-right">
+        <button class="btn btn-success"><i class="fas fa-plus"></i>&nbsp; @Html.ActionLink("Register New Student", "Create")</button>
+    </div>
+</div>
+<br />
+<div class="p-4 border rounded">
+    <table id="tblData" class="table table-stripped table-bordered" style="width:100%">
+        <thead class="thead-dark">
+            <tr class="table-info">
+                <th>FirstName</th>
+                <th>LastName</th>
+                <th>Gender</th>
+                <th>Class</th>
+                <th>Course</th>
+                <th>AcademicYear</th>
+                <th>Guidian</th>
+                <th>GuidianContact</th>
+                <th></th>
+            </tr>
+        </thead>
+       
+    </table>
+</div>
+@section Scripts{
+    <script src="~/Scripts/Customjs/student.js"></script>
+}
+
