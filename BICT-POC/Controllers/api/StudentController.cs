@@ -16,22 +16,9 @@ namespace BICT_POC.Controllers.api
     {
         ApplicationDbContext _context = new ApplicationDbContext();
         [HttpGet]
-        public HttpResponseMessage GetStudents()
+        public IEnumerable<Student> GetStudents()
         {
-            try
-            {
-                var students = _context.Students.ToList();
-                var response = Request.CreateResponse(HttpStatusCode.OK);
-
-                return response;
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
-           
-
+            return _context.Students.ToList();
         }
         [HttpGet]
         public Student GetStudent(int id)
