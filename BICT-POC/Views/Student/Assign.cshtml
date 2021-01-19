@@ -1,4 +1,4 @@
-﻿@model BICT_POC.Models.ViewModels.StudentVM
+﻿@model IEnumerable<BICT_POC.Models.ViewModels.StudentVM>
 
 @{
     ViewBag.Title = "Assign";
@@ -25,7 +25,7 @@
 
                 </div>
                 <div class="col-8">
-                   @* @Html.DropDownListFor(m => m.Student.Id,Model.StudentLists, "--Select Student", new { @class = "form-control" })*@
+                    @Html.DropDownListFor(m => m.Student.Id,Model.StudentLists, "--Select Student", new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.StudentLists, "", new { @class = "text-danger" })
                 </div>
             </div>

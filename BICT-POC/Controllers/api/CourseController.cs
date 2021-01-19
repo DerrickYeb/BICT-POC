@@ -18,7 +18,11 @@ namespace BICT_POC.Controllers.api
             return context.Courses.ToList();
 
         }
-        public Course GetCourse(int id) => context.Courses.Find(id);
+        public Course GetCourse(int id)
+        {
+            var course = context.Courses.Where(x => x.Id == id).FirstOrDefault();
+            return course;
+        }
 
         [HttpPost]
         public HttpResponseMessage Create(Course course)

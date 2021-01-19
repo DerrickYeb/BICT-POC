@@ -39,4 +39,13 @@ const loadDataTable = () => {
             }
         ]
     })
-    }
+}
+
+
+$('#idButton').on('click', function () {
+    var print = $(this).closest('tr').html();
+    newWin = window.open("");
+    newWin.document.write(print);
+    newWin.print();
+    newWin.close();
+})

@@ -15,6 +15,7 @@ namespace BICT_POC.Controllers.api
     public class StudentController : ApiController
     {
         ApplicationDbContext _context = new ApplicationDbContext();
+        List<Student> std = new List<Student>();
         [HttpGet]
         public IEnumerable<Student> GetStudents()
         {
@@ -23,7 +24,19 @@ namespace BICT_POC.Controllers.api
         [HttpGet]
         public Student GetStudent(int id)
         {
-            return _context.Students.Find(id);
+           var student = _context.Students.Where(x => x.Id == id).FirstOrDefault();
+            return student;
+        }
+        [Route("api/student/GetFullNames")]
+        public List<string> GetFullNames()
+        {
+            List<string> output = new List<string>();
+
+            foreach (var student in std)
+            {
+                stu
+            }
+            return output;
         }
 
         [HttpPost]
@@ -64,6 +77,7 @@ namespace BICT_POC.Controllers.api
                 return new HttpResponseMessage(HttpStatusCode.InternalServerError);
             }
         }
+        [HttpDelete]
         public HttpResponseMessage Delete(int id)
         {
             Student student = _context.Students.Find(id);

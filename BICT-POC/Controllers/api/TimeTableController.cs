@@ -13,16 +13,17 @@ namespace BICT_POC.Controllers
     {
         private ApplicationDbContext _context = new ApplicationDbContext();
         [HttpGet]
-        public HttpResponseMessage GetTimeTables()
+        public IEnumerable<TimeTable> GetTimeTables()
         {
-            var TimeTables = _context.TimeTables.ToList();
-            return new HttpResponseMessage(HttpStatusCode.OK);
+            var timeTables = _context.TimeTables.ToList();
+            return timeTables;
 
         }
         [HttpGet]
         public TimeTable GetTimeTable(int id)
         {
-            return _context.TimeTables.Find(id);
+            var timetable = _context.TimeTables.Where(x => x.Id == id).FirstOrDefault();
+            return timetable;
         }
 
         [HttpPost]
