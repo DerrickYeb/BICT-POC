@@ -106,6 +106,10 @@ namespace BICT_POC.Controllers
             }
             return View(studentVM);
         }
+        /// <summary>
+        /// Using direct access from the database without using the web api
+        /// </summary>
+        /// <returns></returns>
         public ActionResult GetCourses()
         {
             return Json(context.Courses.Select(x => new
@@ -114,11 +118,19 @@ namespace BICT_POC.Controllers
                 Title = x.Title
             }).ToList(), JsonRequestBehavior.AllowGet);
         }
+        #region Populating students into the dropdownlist
+        [HttpGet, ActionName("StudentDrop")]
+        public ActionResult GetStudentDrop()
+        {
+            var students = context.Students.OrderBy(x => x.FirstName).ToList();
+            return Json(new { data = students }, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
         public ActionResult GetStudents()
         {
             return Json(context.Students.Select(x => new
             {
-                Id = x.Id,
+
                 FirstName = x.FirstName,
                 LastName = x.LastName,
                 Gender = x.Gender,
@@ -126,7 +138,7 @@ namespace BICT_POC.Controllers
                 GuideanContact = x.GuideanContact,
                 AcademicYear = x.AcademicYear,
                 Class = x.Class,
-                CourseTitle = x.Course.Title
+                Course = x.Course.Title
             }).ToList(), JsonRequestBehavior.AllowGet);
         }
     }

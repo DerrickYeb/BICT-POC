@@ -12,7 +12,7 @@ namespace BICT_POC.Models
     {
         public int Id { get; set; }
         public int CourseId { get; set; }
-        [Required]
+        [ForeignKey("CourseId")]
         public Course Course { get; set; }
         [Required]
         public string Time { get; set; }

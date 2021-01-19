@@ -7,9 +7,9 @@ $(document).ready(function () {
 const loadDataTable = () => {
     dataTable = $('#tblData').DataTable({
         "ajax": {
-            type:"GET",
-            url: "/Student/GetStudents",
-            
+            "type":"GET",
+            "url": "/Student/GetStudents",
+            "datatype":"json"
         },
         "columns": [
             { "data": "firstname", "width": "15%" },
@@ -18,20 +18,8 @@ const loadDataTable = () => {
             { "data": "guidian", "width": "15%" },
             { "data": "guideancontact", "width": "15%" },
             { "data": "academicyear", "width": "15%" },
-            { "data": "student.course.title", "width": "15%" },
-            {
-                "data": "id",
-                "render": function (data) {
-                    return `
-                <div class="text-center">
-                 <a href="/Student/Assign/${data}" class="btn btn-success text-white" style="cursor:pointer">
-                <i class="fas fa-edit"></i>
-                  </a>
-                
-            </div>
-                    `;
-                }, "width": "40%"
-            }
+            { "data": "course.title", "width": "15%" },
+            
         ]
     })
 }
