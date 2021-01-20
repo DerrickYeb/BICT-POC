@@ -15,7 +15,6 @@ namespace BICT_POC.Models
         public int CourseId { get; set; }
         [ForeignKey("CourseId")]
         public Course Course { get; set; }
-        
         [Required]
         public string Time { get; set; }
         

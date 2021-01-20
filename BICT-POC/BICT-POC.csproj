@@ -247,6 +247,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-3.4.1-vsdoc.js" />
     <Content Include="Scripts\Customjs\assign.js" />
+    <Content Include="Scripts\Customjs\dropdown.js" />
     <Content Include="Scripts\Customjs\student.js" />
     <Content Include="Scripts\Customjs\timeTable.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -301,6 +302,7 @@
     <Content Include="Views\TimeTable\Create.cshtml" />
     <Content Include="Views\TimeTable\Index.cshtml" />
     <Content Include="Views\Student\DropDnAssigned.cshtml" />
+    <Content Include="Views\Student\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

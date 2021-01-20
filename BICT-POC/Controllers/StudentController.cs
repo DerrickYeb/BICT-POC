@@ -19,31 +19,14 @@ namespace BICT_POC.Controllers
         string BaseUrl = "https://localhost:44331/";
         private IEnumerable<Student> students = null;
         // GET: Student
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(BaseUrl);
-
-                client.DefaultRequestHeaders.Clear();
-
-                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-
-                HttpResponseMessage responseMessage = await client.GetAsync("api/student/");
-                if (responseMessage.IsSuccessStatusCode)
-                {
-                    var studentResp = responseMessage.Content.ReadAsStringAsync().Result;
-
-                    students = JsonConvert.DeserializeObject<List<Student>>(studentResp);
-                }
-               
-            }
+            var students = context.Students.ToList();
             return View(students);
         }
         [HttpGet]
         public ActionResult GetAll()
         {
-
             var reponse = context.Students.ToList();
             return View(reponse);
         }
@@ -57,21 +40,9 @@ namespace BICT_POC.Controllers
         {
             if (ModelState.IsValid)
             {
-                using (var client = new HttpClient())
-                {
-                    client.BaseAddress = new Uri("https://localhost:44331/api/student");
-
-                    var postTask = client.PostAsJsonAsync<Student>("student", student);
-                    postTask.Wait();
-
-                    var result = postTask.Result;
-                    if (result.IsSuccessStatusCode)
-                    {
-                        return RedirectToAction("Index");
-                    }
-                }
-
-
+                context.Students.Add(student);
+                context.SaveChanges();
+                return RedirectToAction(nameof(Index));
             }
             else
             {
@@ -83,34 +54,41 @@ namespace BICT_POC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Assign(StudentVM studentVM)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                using (var client = new HttpClient())
+                if (studentVM.Student.Id != 0)
                 {
-                    client.BaseAddress = new Uri("https://localhost:44331/api/student");
-
-                    var postTask = client.PutAsJsonAsync("student", studentVM);
-                    postTask.Wait();
-
-                    var result = postTask.Result;
-                    if (result.IsSuccessStatusCode)
-                    {
-                        return RedirectToAction("Index");
-                    }
+                    context.SaveChanges();
+                    //return RedirectToAction(nameof(Index));
                 }
             }
             else
             {
                 return HttpNotFound();
             }
+            PopulateCourseDropdownList(studentVM.Student.CourseId);
             return View(studentVM);
+        }
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+            }
+            Student student = context.Students.Find(id);
+            if (student == null)
+            {
+                return HttpNotFound();
+            }
+            
+            return View(student);
         }
         private void PopulateCourseDropdownList(object selectCourse = null)
         {
             var course = from d in context.Courses
                          orderby d.Title
                          select d;
-            ViewBag.CourseId = new SelectList(course, "CourseId", "Name", selectCourse);
+            ViewBag.Id = new SelectList(course, "Id", "Title", selectCourse);
         }
         public ActionResult Assign(int? id)
         {
@@ -124,16 +102,23 @@ namespace BICT_POC.Controllers
                 }),
                
             };
-
+            
             if (id == null)
             {
                 return View(studentVM);
             }
             studentVM.Student = context.Students.Find(id.GetValueOrDefault());
-            if (studentVM.Student == null)
+            if (TryUpdateModel(studentVM.Student,"",new string[] { "Course"}))
             {
-                return HttpNotFound();
+                context.SaveChanges();
+                //return RedirectToAction("Index");
+
             }
+            else
+            {
+                ModelState.AddModelError("", "Assigning a course to a student failed");
+            }
+            PopulateCourseDropdownList(studentVM.Student.CourseId);
             return View(studentVM);
         }
         /// <summary>
@@ -176,5 +161,6 @@ namespace BICT_POC.Controllers
                 Course = x.Courses
             }).ToList(), JsonRequestBehavior.AllowGet);
         }
+
     }
 }

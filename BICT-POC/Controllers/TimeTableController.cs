@@ -17,27 +17,7 @@ namespace BICT_POC.Controllers
         // GET: TimeTable
         public ActionResult Index()
         {
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri("https://localhost:44331/api/timeTables");
-
-                var responseTask = client.GetAsync("timetable");
-                responseTask.Wait();
-
-                var result = responseTask.Result;
-                if (result.IsSuccessStatusCode)
-                {
-                    var readTask = result.Content.ReadAsAsync<IList<TimeTable>>();
-                    readTask.Wait();
-
-                    timeTables = readTask.Result;
-                }
-                else
-                {
-                    timeTables = Enumerable.Empty<TimeTable>();
-                    ModelState.AddModelError(string.Empty, "Server error. Please check connection");
-                }
-            }
+            var timeTables = context.TimeTables.ToList();
             return View(timeTables);
         }
         public ActionResult Create()
@@ -57,6 +37,8 @@ namespace BICT_POC.Controllers
                 context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
+            PopulateCourseDropdownList(timeTable.TimeTable.CourseId);
+            PopulateStudentsDropdownList(timeTable.Student.Id);
             return View(timeTable);
         }
         public ActionResult GetCourses()
@@ -66,6 +48,28 @@ namespace BICT_POC.Controllers
                 Id = x.Id,
                 Title = x.Title
             }).ToList(), JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult GetStudents()
+        {
+            return Json(context.Students.Select(x => new
+            {
+                id = x.Id,
+                FullName = x.FullName
+            }));
+        }
+        private void PopulateCourseDropdownList(object selectCourse = null)
+        {
+            var course = from d in context.Courses
+                         orderby d.Title
+                         select d;
+            ViewBag.Id = new SelectList(course, "Id", "Title", selectCourse);
+        }
+        private void PopulateStudentsDropdownList(object selectStudent = null)
+        {
+            var student = from d in context.Students
+                         orderby d.FullName
+                         select d;
+            ViewBag.StudentId = new SelectList(student, "Id", "FullName", selectStudent);
         }
     }
 }

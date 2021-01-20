@@ -10,6 +10,6 @@ namespace BICT_POC.Models.ViewModels
     {
         public TimeTable TimeTable { get; set; }
         public IEnumerable<SelectListItem> CoursesList { get; set; }
-        
+        public Student Student { get; set; }
     }
 }
