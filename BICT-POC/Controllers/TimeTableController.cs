@@ -1,4 +1,5 @@
 ﻿using BICT_POC.Models;
+using BICT_POC.Models.ViewModels;
 using SchoolAPI.Models;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ namespace BICT_POC.Controllers
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("https://localhost:44331/api/timeTable");
+                client.BaseAddress = new Uri("https://localhost:44331/api/timeTables");
 
                 var responseTask = client.GetAsync("timetable");
                 responseTask.Wait();
@@ -45,16 +46,16 @@ namespace BICT_POC.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(TimeTable timeTable)
+        public ActionResult Create(TimeTableVM timeTable)
         {
             if (ModelState.IsValid)
             {
-              var result =  context.TimeTables.Add(timeTable);
-                if (result != null)
+                if (timeTable.TimeTable.Id == 0)
                 {
-                    return RedirectToAction("Index");
+                    context.TimeTables.Add(timeTable.TimeTable);
                 }
-                
+                context.SaveChanges();
+                return RedirectToAction(nameof(Index));
             }
             return View(timeTable);
         }

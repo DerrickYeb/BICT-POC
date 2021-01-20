@@ -83,7 +83,7 @@ namespace BICT_POC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Assign(StudentVM studentVM)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 using (var client = new HttpClient())
                 {
@@ -155,6 +155,11 @@ namespace BICT_POC.Controllers
             var students = context.Students.ToList();
             return Json(new { data = students }, JsonRequestBehavior.AllowGet);
         }
+        public ActionResult DropDnAssigned()
+        {
+
+            return View();
+        }
         #endregion
         public ActionResult GetStudents()
         {
@@ -168,7 +173,7 @@ namespace BICT_POC.Controllers
                 GuideanContact = x.GuideanContact,
                 AcademicYear = x.AcademicYear,
                 Class = x.Class,
-                Course = x.Course.Title
+                Course = x.Courses
             }).ToList(), JsonRequestBehavior.AllowGet);
         }
     }

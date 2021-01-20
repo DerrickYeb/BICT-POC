@@ -204,6 +204,18 @@
     <Compile Include="Migrations\202101181901315_validMigration.Designer.cs">
       <DependentUpon>202101181901315_validMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202101200923092_timeTableValidate.cs" />
+    <Compile Include="Migrations\202101200923092_timeTableValidate.Designer.cs">
+      <DependentUpon>202101200923092_timeTableValidate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101200959476_studentModified.cs" />
+    <Compile Include="Migrations\202101200959476_studentModified.Designer.cs">
+      <DependentUpon>202101200959476_studentModified.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101201228511_timeTableValidate1.cs" />
+    <Compile Include="Migrations\202101201228511_timeTableValidate1.Designer.cs">
+      <DependentUpon>202101201228511_timeTableValidate1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AssignedCourseVM.cs" />
     <Compile Include="Models\Days.cs" />
@@ -217,6 +229,7 @@
     <Compile Include="Models\TimeTable.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\ViewModel\StudentVM.cs" />
+    <Compile Include="Models\ViewModel\AssignedVM.cs" />
     <Compile Include="Models\ViewModel\TimeTableVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -287,6 +300,7 @@
     <Content Include="Views\Student\Index.cshtml" />
     <Content Include="Views\TimeTable\Create.cshtml" />
     <Content Include="Views\TimeTable\Index.cshtml" />
+    <Content Include="Views\Student\DropDnAssigned.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -314,6 +328,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202101181901315_validMigration.resx">
       <DependentUpon>202101181901315_validMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101200923092_timeTableValidate.resx">
+      <DependentUpon>202101200923092_timeTableValidate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101200959476_studentModified.resx">
+      <DependentUpon>202101200959476_studentModified.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101201228511_timeTableValidate1.resx">
+      <DependentUpon>202101201228511_timeTableValidate1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -6,10 +6,11 @@ using System.Web.Mvc;
 
 namespace BICT_POC.Models.ViewModels
 {
-    public class TimeTableVM
+    public class AssignedVM
     {
-        public TimeTable TimeTable { get; set; }
+        public Course Course { get; set; }
         public IEnumerable<SelectListItem> CoursesList { get; set; }
-        
+        public Student Student { get; set; }
+        public IEnumerable<SelectListItem> StudentsList { get; set; }
     }
 }

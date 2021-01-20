@@ -58,11 +58,11 @@ namespace BICT_POC.Controllers.api
             }
         }
         [HttpPut]
-        public HttpResponseMessage UpdateStudent(int Id, Student student)
+        public HttpResponseMessage UpdateStudent(int Id, StudentVM student)
         {
             try
             {
-                if (Id == student.Id)
+                if (Id == student.Student.Id)
                 {
                     _context.Entry(student).State = System.Data.Entity.EntityState.Modified;
                    _context.SaveChanges();

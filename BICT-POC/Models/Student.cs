@@ -35,10 +35,10 @@ namespace BICT_POC.Models
         public string AcademicYear { get; set; }
         [Required,StringLength(20)]
         public string Address { get; set; }
-        [ForeignKey(nameof(Course))]
-        public int? CourseId { get; set; }
-        public Course Course { get; set; }
-
+        public Nullable<int> CourseId { get; set; }
+        [ForeignKey("CourseId")]
+        public Course Courses { get; set; }
+       
         public string FullName { get { return string.Format("{0} {1}", FirstName, LastName); } }
     }
 }
