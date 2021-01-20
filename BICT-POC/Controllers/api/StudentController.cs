@@ -17,6 +17,7 @@ namespace BICT_POC.Controllers.api
         ApplicationDbContext _context = new ApplicationDbContext();
         List<Student> std = new List<Student>();
         [HttpGet]
+        
         public IEnumerable<Student> GetStudents()
         {
             return _context.Students.ToList();
@@ -27,6 +28,7 @@ namespace BICT_POC.Controllers.api
            var student = _context.Students.Where(x => x.Id == id).FirstOrDefault();
             return student;
         }
+        [HttpGet]
         [Route("api/student/GetFullNames")]
         public List<string> GetFullNames()
         {
@@ -34,7 +36,7 @@ namespace BICT_POC.Controllers.api
 
             foreach (var student in std)
             {
-                stu
+                
             }
             return output;
         }

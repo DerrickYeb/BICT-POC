@@ -6,11 +6,11 @@ $(document).ready(function () {
 });
 
 const loadDataTable = () => {
-    dataTable = $('#tblData').DataTable({
+    dataTable = $('#tbData').DataTable({
         "ajax": {
             "type": "GET",
-            "url": "/Student/Index",
-            "dataType":"json"
+            "url": "/Student/GetAll",
+            "datatype":"json"
         },
         "columns": [
             { "data": "firstname", "width": "15%" },
@@ -26,13 +26,9 @@ const loadDataTable = () => {
                 "render": function (data) {
                     return `
                 <div class="text-center">
-                 <a href="/Student/Edit/${data}" class="btn btn-success text-white" style="cursor:pointer">
+                 <a href="/Student/Assign/${data}" class="btn btn-success text-white" style="cursor:pointer">
                 <i class="fas fa-edit"></i>
                   </a>
-                <a onclick="/Student/Assign/${data}" class="btn btn-danger text-white">
-                 <i class="fas fa-add"></i>
-             </a>
-
             </div>
                     `;
                 }, "width": "40%"
@@ -42,10 +38,3 @@ const loadDataTable = () => {
 }
 
 
-$('#idButton').on('click', function () {
-    var print = $(this).closest('tr').html();
-    newWin = window.open("");
-    newWin.document.write(print);
-    newWin.print();
-    newWin.close();
-})

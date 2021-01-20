@@ -79,18 +79,31 @@ namespace BICT_POC.Controllers
             }
             return View(student);
         }
-        public ActionResult Edit(int? id)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Assign(StudentVM studentVM)
         {
-            if (id == null)
+            if (ModelState.IsValid)
             {
-                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri("https://localhost:44331/api/student");
+
+                    var postTask = client.PutAsJsonAsync("student", studentVM);
+                    postTask.Wait();
+
+                    var result = postTask.Result;
+                    if (result.IsSuccessStatusCode)
+                    {
+                        return RedirectToAction("Index");
+                    }
+                }
             }
-            var student = context.Students.Find(id);
-            if (student == null)
+            else
             {
                 return HttpNotFound();
             }
-            return View(student);
+            return View(studentVM);
         }
         private void PopulateCourseDropdownList(object selectCourse = null)
         {
