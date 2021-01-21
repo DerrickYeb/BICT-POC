@@ -1,5 +1,5 @@
 ﻿using BICT_POC.Models;
-using BICT_POC.Models.ViewModels;
+using BICT_POC.Models.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;

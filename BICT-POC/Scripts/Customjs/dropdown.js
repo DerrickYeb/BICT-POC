@@ -17,15 +17,15 @@
 $(document).ready(function () {
     $.ajax({
         type: "GET",
-        url: "/Student/GetStudens",
+        url: "/Student/GetStudents",
         data: "{}",
         success: function (data) {
-            var s = '<option value="-1">Please select a course </option>';
+            var s = '<option value="-1">Please select a student </option>';
             for (var i = 0; i < data.length; i++) {
-                s += '<option value="' + data[i].Id + '">' + data[i].Title + '</option';
+                s += '<option value="' + data[i].Id + '">' + data[i].Name + '</option';
 
             }
-            $("#courseDropdown").html(s);
+            $("#studentsDropDown").html(s);
         }
     })
 })

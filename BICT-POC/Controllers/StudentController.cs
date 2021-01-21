@@ -1,5 +1,5 @@
 ﻿using BICT_POC.Models;
-using BICT_POC.Models.ViewModels;
+using BICT_POC.Models.ViewModel;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -12,12 +12,11 @@ using System.Web.Mvc;
 
 namespace BICT_POC.Controllers
 {
-    
+
     public class StudentController : Controller
     {
         ApplicationDbContext context = new ApplicationDbContext();
-        string BaseUrl = "https://localhost:44331/";
-        private IEnumerable<Student> students = null;
+       
         // GET: Student
         public ActionResult Index()
         {
@@ -52,23 +51,26 @@ namespace BICT_POC.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Assign(StudentVM studentVM)
+        public ActionResult Assign(Student student)
         {
             if (ModelState.IsValid)
             {
-                if (studentVM.Student.Id != 0)
+                if (student.Id != 0)
                 {
+                    
                     context.SaveChanges();
-                    //return RedirectToAction(nameof(Index));
+                    return RedirectToAction(nameof(Index));
                 }
             }
             else
             {
                 return HttpNotFound();
             }
-            PopulateCourseDropdownList(studentVM.Student.CourseId);
-            return View(studentVM);
+            //PopulateCourseDropdownList(studentVM.Student.CourseId);
+            ViewBag.Id = new SelectList(context.Courses, "Id", "Title", student.CourseId);
+            return View(student);
         }
+       
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -80,7 +82,7 @@ namespace BICT_POC.Controllers
             {
                 return HttpNotFound();
             }
-            
+
             return View(student);
         }
         private void PopulateCourseDropdownList(object selectCourse = null)
@@ -90,36 +92,32 @@ namespace BICT_POC.Controllers
                          select d;
             ViewBag.Id = new SelectList(course, "Id", "Title", selectCourse);
         }
+       
         public ActionResult Assign(int? id)
         {
-            StudentVM studentVM = new StudentVM()
-            {
-                Student = new Student(),
-                CoursesList = context.Courses.Select(i => new SelectListItem
-                {
-                    Text = i.Title,
-                    Value = i.Id.ToString()
-                }),
-               
-            };
-            
+            Student student = new Student();
+         
             if (id == null)
             {
-                return View(studentVM);
+                return View(student);
             }
-            studentVM.Student = context.Students.Find(id.GetValueOrDefault());
-            if (TryUpdateModel(studentVM.Student,"",new string[] { "Course"}))
+            else if (id != 0)
             {
-                context.SaveChanges();
-                //return RedirectToAction("Index");
+                student = context.Students.Find(id.GetValueOrDefault());
+                if (TryUpdateModel(student, "", new string[] { "CourseId" }))
+                {
+                    context.SaveChanges();
+                    //return RedirectToAction("Index");
 
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Assigning a course to a student failed");
+                }
             }
-            else
-            {
-                ModelState.AddModelError("", "Assigning a course to a student failed");
-            }
-            PopulateCourseDropdownList(studentVM.Student.CourseId);
-            return View(studentVM);
+            
+            PopulateCourseDropdownList(student.CourseId);
+            return View(student);
         }
         /// <summary>
         /// Using direct access from the database without using the web api
@@ -140,27 +138,66 @@ namespace BICT_POC.Controllers
             var students = context.Students.ToList();
             return Json(new { data = students }, JsonRequestBehavior.AllowGet);
         }
-        public ActionResult DropDnAssigned()
-        {
+        //public ActionResult DropDnAssigned(Enrollment enrollment)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
 
-            return View();
-        }
+        //    }
+        //}
         #endregion
         public ActionResult GetStudents()
         {
             return Json(context.Students.Select(x => new
             {
-
-                FirstName = x.FirstName,
-                LastName = x.LastName,
-                Gender = x.Gender,
-                Guidian = x.Guidian,
-                GuideanContact = x.GuideanContact,
-                AcademicYear = x.AcademicYear,
-                Class = x.Class,
-                Course = x.Courses
+                Id = x.Id,
+                Name = x.FirstName +" "+ x.LastName
             }).ToList(), JsonRequestBehavior.AllowGet);
         }
+        private void PopulateAssignedCourseData(Student student)
+        {
+            var allCourses = context.Courses;
+            var students = new HashSet<int>(student.Courses.Select(c => c.Id));
+            var viewModel = new List<AssignedCourse>();
+            foreach (var course in allCourses)
+            {
+                viewModel.Add(new AssignedCourse
+                {
+                    CourseID = course.Id,
+                    Title = course.Title,
+                    Assigned = students.Contains(course.Id)
+                });
+            }
+            ViewBag.Courses = viewModel;
+        }
 
+        public void UpdateStudentCourses(string[] selectedCourses, Student student)
+        {
+            if (selectedCourses == null)
+            {
+                student.Courses = new List<Course>();
+                return;
+            }
+            var selectedCoursesHS = new HashSet<string>(selectedCourses);
+            var selectCourses = new HashSet<int>
+                (student.Courses.Select(c => c.Id));
+            foreach (var course in context.Courses)
+            {
+                if (selectedCoursesHS.Contains(course.Id.ToString()))
+                {
+                    if (!selectCourses.Contains(course.Id))
+                    {
+                        student.Courses.Add(course);
+                    }
+                }
+                else
+                {
+                    if (selectCourses.Contains(course.Id))
+                    {
+                        student.Courses.Remove(course);
+                    }
+                }
+            }
+        }
     }
 }

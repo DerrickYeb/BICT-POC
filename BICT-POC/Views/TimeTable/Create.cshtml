@@ -1,4 +1,4 @@
-﻿@model BICT_POC.Models.ViewModels.TimeTableVM
+﻿@model BICT_POC.Models.ViewModel.TimeTableVM
 
 @{
     ViewBag.Title = "Create";
@@ -20,7 +20,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.TimeTable.Course, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("courseDropDown",Model.CoursesList,"Select Course",new {@class = "form-control" })
+                @*@Html.DropDownList("Id",string.Empty);*@
                                 
                 @Html.ValidationMessageFor(model => model.TimeTable.Course, "", new { @class = "text-danger" })
             </div>

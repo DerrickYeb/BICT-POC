@@ -32,5 +32,6 @@ namespace BICT_POC.Models
         public DbSet<Student> Students { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<TimeTable> TimeTables { get; set; }
+        public DbSet<Enrollment> Enrollments { get; set; }
     }
 }

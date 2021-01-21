@@ -10,35 +10,17 @@ using System.Web.Mvc;
 
 namespace BICT_POC.Models
 {
-    public class Student
+    public class Student : RegisterModel
     {
-        [Column("StudentId")]
-        public int Id { get; set; }
-        [Required]
-        [DisplayName("First Name")]
-        public string FirstName { get; set; }
-        [Required]
-        [DisplayName("Last Name")]
-        public string LastName { get; set; }
-        [Required]
-        public string Guidian { get; set; }
-        [Required]
-        [DisplayName("Guidian Contact")]
-        [Phone]
-        public string GuideanContact { get; set; }
-        [Required]
-        public string Class { get; set; }
-        [Required]
-        public string Gender { get; set; }
-        [Required]
-        [DisplayName("Academic Year")]
-        public string AcademicYear { get; set; }
-        [Required,StringLength(20)]
-        public string Address { get; set; }
-        public Nullable<int> CourseId { get; set; }
-        [ForeignKey("CourseId")]
-        public Course Courses { get; set; }
-       
-        public string FullName { get { return string.Format("{0} {1}", FirstName, LastName); } }
+        
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Enrollment Date")]
+        public DateTime DateEnrolled { get; set; }
+        public int? CourseId { get; set; }
+        [DisplayName("Time Table")]
+        public virtual ICollection<Enrollment> Enrollments { get; set; }
+       public virtual ICollection<Course> Courses { get; set; }
+      
     }
 }

@@ -216,18 +216,33 @@
     <Compile Include="Migrations\202101201228511_timeTableValidate1.Designer.cs">
       <DependentUpon>202101201228511_timeTableValidate1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202101202151491_newModelsAdded.cs" />
+    <Compile Include="Migrations\202101202151491_newModelsAdded.Designer.cs">
+      <DependentUpon>202101202151491_newModelsAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101211158224_studentModel.cs" />
+    <Compile Include="Migrations\202101211158224_studentModel.Designer.cs">
+      <DependentUpon>202101211158224_studentModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101211504521_studentModel1.cs" />
+    <Compile Include="Migrations\202101211504521_studentModel1.Designer.cs">
+      <DependentUpon>202101211504521_studentModel1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AssignedCourseVM.cs" />
     <Compile Include="Models\Days.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Course.cs" />
+    <Compile Include="Models\Enrollment.cs" />
     <Compile Include="Models\Gender.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Models\Student.cs" />
     <Compile Include="Models\TimeTable.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Models\ViewModel\AssignedCourse.cs" />
     <Compile Include="Models\ViewModel\StudentVM.cs" />
     <Compile Include="Models\ViewModel\AssignedVM.cs" />
     <Compile Include="Models\ViewModel\TimeTableVM.cs" />
@@ -303,6 +318,7 @@
     <Content Include="Views\TimeTable\Index.cshtml" />
     <Content Include="Views\Student\DropDnAssigned.cshtml" />
     <Content Include="Views\Student\Details.cshtml" />
+    <Content Include="Views\Course\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -339,6 +355,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202101201228511_timeTableValidate1.resx">
       <DependentUpon>202101201228511_timeTableValidate1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101202151491_newModelsAdded.resx">
+      <DependentUpon>202101202151491_newModelsAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101211158224_studentModel.resx">
+      <DependentUpon>202101211158224_studentModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101211504521_studentModel1.resx">
+      <DependentUpon>202101211504521_studentModel1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

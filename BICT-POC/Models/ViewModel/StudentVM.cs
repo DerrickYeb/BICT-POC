@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace BICT_POC.Models.ViewModels
+namespace BICT_POC.Models.ViewModel
 {
     public class StudentVM
     {

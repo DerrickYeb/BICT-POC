@@ -41,5 +41,28 @@ namespace BICT_POC.Controllers
             }
             return View(course);
         }
+        public ActionResult Edit(int? Id)
+        {
+            var course = context.Courses.Find(Id);
+            try
+            {
+                if (Id != 0)
+                {
+                    context.Entry(course).State = System.Data.Entity.EntityState.Modified;
+                    context.SaveChanges();
+                    return View(course);
+                }
+                else
+                {
+                    return View(course);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                return HttpNotFound();
+            }
+            
+        }
     }
 }

@@ -16,8 +16,9 @@ namespace BICT_POC.Models
         [Column("CourseId")]
         public int Id { get; set; }
         [Required]
-        [StringLength(50,MinimumLength = 5)]
         public string Title { get; set; }
-        
+        public ICollection<Days> Day { get; set; }
+
+        public virtual ICollection<Enrollment> Enrollments { get; set; }
     }
 }

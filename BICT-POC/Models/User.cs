@@ -11,7 +11,6 @@ namespace BICT_POC.Models
 {
     public class User
     {
-
         [Key, Column(Order = 1)]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
