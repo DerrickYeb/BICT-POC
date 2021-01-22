@@ -228,6 +228,18 @@
     <Compile Include="Migrations\202101211504521_studentModel1.Designer.cs">
       <DependentUpon>202101211504521_studentModel1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202101211612396_studentModel2.cs" />
+    <Compile Include="Migrations\202101211612396_studentModel2.Designer.cs">
+      <DependentUpon>202101211612396_studentModel2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101211756548_studentModelValidate.cs" />
+    <Compile Include="Migrations\202101211756548_studentModelValidate.Designer.cs">
+      <DependentUpon>202101211756548_studentModelValidate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101212219230_studentModelValidateModified.cs" />
+    <Compile Include="Migrations\202101212219230_studentModelValidateModified.Designer.cs">
+      <DependentUpon>202101212219230_studentModelValidateModified.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AssignedCourseVM.cs" />
     <Compile Include="Models\Days.cs" />
@@ -364,6 +376,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202101211504521_studentModel1.resx">
       <DependentUpon>202101211504521_studentModel1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101211612396_studentModel2.resx">
+      <DependentUpon>202101211612396_studentModel2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101211756548_studentModelValidate.resx">
+      <DependentUpon>202101211756548_studentModelValidate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101212219230_studentModelValidateModified.resx">
+      <DependentUpon>202101212219230_studentModelValidateModified.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -16,7 +16,7 @@ namespace BICT_POC.Controllers
     public class StudentController : Controller
     {
         ApplicationDbContext context = new ApplicationDbContext();
-       
+
         // GET: Student
         public ActionResult Index()
         {
@@ -55,22 +55,41 @@ namespace BICT_POC.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (student.Id != 0)
+
+                int id = (int)TempData["Id"];
+                var studentData = context.Students.Where(x => x.Id == id).FirstOrDefault();
+                if (studentData != null)
                 {
                     
+                    studentData.CourseId = student.CourseId;
+                    context.Students.Attach(studentData);
+                    context.Entry(studentData).State = System.Data.Entity.EntityState.Modified;
                     context.SaveChanges();
                     return RedirectToAction(nameof(Index));
+
                 }
+
+            }
+            ViewBag.Id = new SelectList(context.Courses, "Id", "Title");
+            return View(student);
+        }
+        public ActionResult Assign(int? id)
+        {
+            if (id != 0)
+            {
+                Student student = context.Students.Find(id.GetValueOrDefault());
+                context.Students.Attach(student);
+                context.SaveChanges();
+                PopulateCourseDropdownList(student.CourseId);
+                return View(student);
             }
             else
             {
-                return HttpNotFound();
+                return View();
+                
             }
-            //PopulateCourseDropdownList(studentVM.Student.CourseId);
-            ViewBag.Id = new SelectList(context.Courses, "Id", "Title", student.CourseId);
-            return View(student);
+            
         }
-       
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -92,33 +111,8 @@ namespace BICT_POC.Controllers
                          select d;
             ViewBag.Id = new SelectList(course, "Id", "Title", selectCourse);
         }
-       
-        public ActionResult Assign(int? id)
-        {
-            Student student = new Student();
-         
-            if (id == null)
-            {
-                return View(student);
-            }
-            else if (id != 0)
-            {
-                student = context.Students.Find(id.GetValueOrDefault());
-                if (TryUpdateModel(student, "", new string[] { "CourseId" }))
-                {
-                    context.SaveChanges();
-                    //return RedirectToAction("Index");
 
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Assigning a course to a student failed");
-                }
-            }
-            
-            PopulateCourseDropdownList(student.CourseId);
-            return View(student);
-        }
+
         /// <summary>
         /// Using direct access from the database without using the web api
         /// </summary>
@@ -138,20 +132,13 @@ namespace BICT_POC.Controllers
             var students = context.Students.ToList();
             return Json(new { data = students }, JsonRequestBehavior.AllowGet);
         }
-        //public ActionResult DropDnAssigned(Enrollment enrollment)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-
-        //    }
-        //}
         #endregion
         public ActionResult GetStudents()
         {
             return Json(context.Students.Select(x => new
             {
                 Id = x.Id,
-                Name = x.FirstName +" "+ x.LastName
+                Name = x.FirstName + " " + x.LastName
             }).ToList(), JsonRequestBehavior.AllowGet);
         }
         private void PopulateAssignedCourseData(Student student)

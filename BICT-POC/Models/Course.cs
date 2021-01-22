@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace BICT_POC.Models
 {
@@ -17,8 +18,8 @@ namespace BICT_POC.Models
         public int Id { get; set; }
         [Required]
         public string Title { get; set; }
-        public ICollection<Days> Day { get; set; }
-
+        public Days Day { get; set; }
+        public DateTime Time { get; set; }
         public virtual ICollection<Enrollment> Enrollments { get; set; }
     }
 }

@@ -13,7 +13,7 @@ namespace BICT_POC.Controllers
     public class TimeTableController : Controller
     {
         ApplicationDbContext context = new ApplicationDbContext();
-        IEnumerable<TimeTable> timeTables = null;
+
         // GET: TimeTable
         public ActionResult Index()
         {
@@ -22,23 +22,26 @@ namespace BICT_POC.Controllers
         }
         public ActionResult Create()
         {
+            ViewBag.Id = new SelectList(context.Courses, "Id", "Title");
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(TimeTableVM timeTable)
+        public ActionResult Create(TimeTable timeTable)
         {
             if (ModelState.IsValid)
             {
-                if (timeTable.TimeTable.Id == 0)
-                {
-                    context.TimeTables.Add(timeTable.TimeTable);
-                }
+                ViewBag.Id = new SelectList(context.Courses, "Id", "Title", timeTable.CourseId);
+                context.TimeTables.Add(timeTable);
                 context.SaveChanges();
-                return RedirectToAction(nameof(Index));
+                RedirectToAction(nameof(Index));
             }
-            PopulateCourseDropdownList(timeTable.TimeTable.CourseId);
-            PopulateStudentsDropdownList(timeTable.Student.Id);
+            else
+            {
+                return ViewBag("An error has occured");
+            }
+          
+           
             return View(timeTable);
         }
         public ActionResult GetCourses()
@@ -64,12 +67,6 @@ namespace BICT_POC.Controllers
                          select d;
             ViewBag.Id = new SelectList(course, "Id", "Title", selectCourse);
         }
-        private void PopulateStudentsDropdownList(object selectStudent = null)
-        {
-            var student = from d in context.Students
-                         orderby d.FullName
-                         select d;
-            ViewBag.StudentId = new SelectList(student, "Id", "FullName", selectStudent);
-        }
+
     }
 }

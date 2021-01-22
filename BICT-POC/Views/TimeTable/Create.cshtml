@@ -1,4 +1,4 @@
-﻿@model BICT_POC.Models.ViewModel.TimeTableVM
+﻿@model BICT_POC.Models.TimeTable
 
 @{
     ViewBag.Title = "Create";
@@ -18,25 +18,25 @@
 
 
         <div class="form-group">
-            @Html.LabelFor(model => model.TimeTable.Course, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(mo => mo.CourseId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @*@Html.DropDownList("Id",string.Empty);*@
+                @Html.DropDownList("Id",string.Empty);
                                 
-                @Html.ValidationMessageFor(model => model.TimeTable.Course, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.CourseId, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(model => model.TimeTable.Day, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Day, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-             @Html.EditorFor(m => m.TimeTable.Day,"",new { @class ="form-control"})
-                @Html.ValidationMessageFor(model => model.TimeTable.Day, "", new { @class = "text-danger" })
+             @Html.EditorFor(m => m.Day,"",new { @class ="form-control"})
+                @Html.ValidationMessageFor(model => model.Day, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
 
-            @Html.LabelFor(model => model.TimeTable.Time, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Time, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.TimeTable.Time, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Course.Time, "", new { @class = "text-danger" })
             </div>
         </div>
 
